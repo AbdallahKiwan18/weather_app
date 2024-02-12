@@ -15,22 +15,8 @@ class WeatherHomeScreen extends StatefulWidget {
 }
 
 class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
-  late final TextEditingController _searchController;
-  late final FocusNode _focusNode;
 
-  @override
-  void initState() {
-    _searchController = TextEditingController();
-    _focusNode = FocusNode();
-    super.initState();
-  }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    _focusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +31,10 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
               SizedBox(height: AppSize.s50),
               CustomTextFieldWidget(
                   fieldSubmit: (val) {
-                    controller.getSearchWeatherData(_searchController.text);
+                    controller.getSearchWeatherData(controller.searchController.text);
                   },
-                  focus: _focusNode,
-                  ctrl: _searchController,
+                  focus: controller.focusNode,
+                  ctrl: controller.searchController,
                   suffixIcon: Icons.search,
                   text: "Search"),
               (controller.getStatus() == NetworkStatus.loading)
@@ -56,7 +42,7 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
                       height: MediaQuery.of(context).size.height * 0.7,
                       child: const Center(child: LoadingWidget()))
                   : (controller.getStatus() == NetworkStatus.error &&
-                          _searchController.text.isNotEmpty)
+                  controller.searchController.text.isNotEmpty)
                       ? const Center(
                           child: Text("Location is not correct"),
                         )

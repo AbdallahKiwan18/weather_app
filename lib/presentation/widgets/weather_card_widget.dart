@@ -27,7 +27,9 @@ class WeatherCardWidget extends StatelessWidget {
           ),
           Text(
             (controller.currentWeatherData.main?.temp != null)
-                ? "${(controller.currentWeatherData.main!.temp! - 273.15).round().toString()}\u2103"
+                ? (controller.isFahrenheit)?
+            "${controller.celsiusToFahrenheit((controller.currentWeatherData.main!.temp! - 273.15).round().toDouble())}\u2109"
+                :"${(controller.currentWeatherData.main!.temp! - 273.15).round().toString()}\u2103"
                 : "",
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   fontWeight: FontWeight.bold,

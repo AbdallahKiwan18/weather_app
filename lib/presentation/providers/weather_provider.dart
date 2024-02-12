@@ -13,11 +13,15 @@ class WeatherProvider with ChangeNotifier {
   dynamic _lat;
   dynamic _lon;
   CurrentWeatherData currentWeatherData = CurrentWeatherData();
+   final TextEditingController searchController = TextEditingController();
+  late final FocusNode focusNode = FocusNode();
   final DeBouncer _deBouncer = DeBouncer();
   List<CurrentWeatherData> dataList = [];
   List<FiveDayData> fiveDaysData = [];
   NetworkStatus? _networkStatus = NetworkStatus.loading;
   Position? currentPosition;
+  bool isFahrenheit = false;
+
 
   setStatus(NetworkStatus networkStatus) {
     _networkStatus = networkStatus;
@@ -40,7 +44,7 @@ class WeatherProvider with ChangeNotifier {
         setStatus(NetworkStatus.success);
       }, onError: (error) {
         if (searchCity == "" || searchCity == null ) {
-          _city = "";
+          _city = null;
           getCurrentWeatherData();
         }
         setStatus(NetworkStatus.error);
@@ -64,11 +68,11 @@ class WeatherProvider with ChangeNotifier {
   getFiveDaysData() {
     setStatus(NetworkStatus.loading);
     WeatherRepository(
-      city: '$_city',
+      city: _city,
       lat: _lat,
       lon: _lon,
     ).getFiveDaysForecastData(
-        isSearch: (_city != null) ? true : false,
+        isSearch: (_city == null) ? false : true,
         onSuccess: (data) {
           fiveDaysData = data;
           setStatus(NetworkStatus.success);
@@ -114,5 +118,14 @@ class WeatherProvider with ChangeNotifier {
       _lon = currentPosition!.longitude;
       notifyListeners();
     });
+  }
+
+  changeToFahrenheit(bool val){
+    isFahrenheit  = val;
+    notifyListeners();
+  }
+
+  double celsiusToFahrenheit(double celsius) {
+    return (celsius * 9 / 5) + 32;
   }
 }

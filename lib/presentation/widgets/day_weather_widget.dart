@@ -56,7 +56,9 @@ class DayWeatherWidget extends StatelessWidget {
               const Spacer(),
               Text(
                 (controller.fiveDaysData[index!].temp != null)
-                    ? "${(controller.fiveDaysData[index!].temp! - 273.15).round().toString()}\u2103"
+                    ? (controller.isFahrenheit)?
+                "${controller.celsiusToFahrenheit((controller.fiveDaysData[index!].temp! - 273.15).round().toDouble())}\u2109"
+                    :"${(controller.fiveDaysData[index!].temp! - 273.15).round().toString()}\u2103"
                     : "",
                 style: Theme.of(context).textTheme.labelLarge,
               ),
