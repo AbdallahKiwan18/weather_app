@@ -5,23 +5,28 @@ void showCustomDialog(BuildContext context) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
-    barrierDismissible: true,
+    barrierDismissible: false,
     barrierColor: Colors.black.withOpacity(0.5),
     transitionDuration: const Duration(milliseconds: 700),
     pageBuilder: (_, __, ___) {
-      return Center(
-        child: Container(
-          height: AppSize.s120,
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.symmetric(horizontal: AppPadding.p20),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(40)),
-          child: Material(
-              child: Center(
-                  child: Text(
-            "App Need Location",
-            style: Theme.of(context).textTheme.titleLarge,
-          ))),
+      return WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Center(
+          child: Container(
+            height: AppSize.s120,
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: AppPadding.p20),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(40)),
+            child: Material(
+                child: Center(
+                    child: Text(
+              "App Need Location",
+              style: Theme.of(context).textTheme.titleLarge,
+            ))),
+          ),
         ),
       );
     },

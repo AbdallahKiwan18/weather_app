@@ -18,29 +18,30 @@ class WeatherDateLocationWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    DateFormat()
-                        .add_MMMMEEEEd()
-                        .format(DateTime.now()),
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: AppFontSize.s15,
-                        color: AppColors.secondaryColor),
-                  ),
-                  SizedBox(height: AppSize.s4),
-                  Text(
-                    controller.currentWeatherData.name??"",
-                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      DateFormat()
+                          .add_MMMMEEEEd()
+                          .format(DateTime.now()),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: AppFontSize.s35,
-                        ),
-                  ),
-                ],
+                          fontSize: AppFontSize.s15,
+                          color: AppColors.secondaryColor),
+                    ),
+                    SizedBox(height: AppSize.s4),
+                    Text(
+                      controller.currentWeatherData.name??"",
+                      style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: AppFontSize.s35,
+                          ),
+                    ),
+                  ],
+                ),
               ),
-              const Spacer(),
               Icon(
                 Icons.location_on_outlined,
                 size: AppSize.s30,

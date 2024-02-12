@@ -35,30 +35,36 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<WeatherProvider>(builder: (context, controller, _) {
-      return (controller.getStatus() == NetworkStatus.loading)
-          ? const Center(child: LoadingWidget())
-          : (controller.getStatus() == NetworkStatus.error)
-              ? const Center(
-                  child: Text("An Error Happened"),
-                )
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: AppPadding.p15, horizontal: AppPadding.p24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: AppSize.s50),
-                        CustomTextFieldWidget(
-                            focus: _focusNode,
-                            ctrl: _searchController,
-                            suffixIcon: Icons.search,
-                            text: "Search"),
-                        const WeatherCardWidget(),
-                      ],
-                    ),
-                  ),
-                );
+      return SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: AppPadding.p15, horizontal: AppPadding.p24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: AppSize.s50),
+              CustomTextFieldWidget(
+                  fieldSubmit: (val) {
+                    controller.getSearchWeatherData(_searchController.text);
+                  },
+                  focus: _focusNode,
+                  ctrl: _searchController,
+                  suffixIcon: Icons.search,
+                  text: "Search"),
+              (controller.getStatus() == NetworkStatus.loading)
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: const Center(child: LoadingWidget()))
+                  : (controller.getStatus() == NetworkStatus.error &&
+                          _searchController.text.isNotEmpty)
+                      ? const Center(
+                          child: Text("Location is not correct"),
+                        )
+                      : const WeatherCardWidget(),
+            ],
+          ),
+        ),
+      );
     });
   }
 }

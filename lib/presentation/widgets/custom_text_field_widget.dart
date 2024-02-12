@@ -71,7 +71,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         onTap: widget.tapFocus == true ? setFoucsNodeListener : null,
         enabled: widget.enable,
         focusNode: widget.focus,
-        onFieldSubmitted: widget.fieldSubmit as void Function(String)?,
+        onChanged: widget.fieldSubmit as void Function(String)?,
         autovalidateMode: widget.validateType,
         keyboardType: widget.keyboard,
         controller: widget.ctrl,

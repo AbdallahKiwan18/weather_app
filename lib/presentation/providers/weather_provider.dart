@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_app/core/helpers/debouncer.dart';
 import 'package:weather_app/core/helpers/functions.dart';
 import 'package:weather_app/core/utils/app_images.dart';
 import 'package:weather_app/core/utils/network_status.dart';
@@ -8,11 +9,11 @@ import 'package:weather_app/models/five_days_data.dart';
 import 'package:weather_app/repositories/weather_repository.dart';
 
 class WeatherProvider with ChangeNotifier {
-  String? city;
-  dynamic lat;
-  dynamic lon;
-  String? searchText;
+  String? _city;
+  dynamic _lat;
+  dynamic _lon;
   CurrentWeatherData currentWeatherData = CurrentWeatherData();
+  final DeBouncer _deBouncer = DeBouncer();
   List<CurrentWeatherData> dataList = [];
   List<FiveDayData> fiveDaysData = [];
   NetworkStatus? _networkStatus = NetworkStatus.loading;
@@ -36,20 +37,27 @@ class WeatherProvider with ChangeNotifier {
 
   void getSearchWeatherData(searchCity) {
     setStatus(NetworkStatus.loading);
-    WeatherRepository(city: searchCity).getSearchWeatherData(onSuccess: (data) {
-      currentWeatherData = data;
-      city = searchCity;
-      setStatus(NetworkStatus.success);
-    }, onError: (error) {
-      setStatus(NetworkStatus.error);
+    _deBouncer.run(() {
+      WeatherRepository(city: searchCity).getSearchWeatherData(
+          onSuccess: (data) {
+        currentWeatherData = data;
+        _city = searchCity;
+        setStatus(NetworkStatus.success);
+      }, onError: (error) {
+        if (searchCity == "") {
+          _city = "";
+          getCurrentWeatherData();
+        }
+        setStatus(NetworkStatus.error);
+      });
     });
   }
 
   void getCurrentWeatherData() {
     setStatus(NetworkStatus.loading);
     WeatherRepository(
-      lat: lat,
-      lon: lon,
+      lat: _lat,
+      lon: _lon,
     ).getCurrentWeatherData(onSuccess: (data) {
       currentWeatherData = data;
       setStatus(NetworkStatus.success);
@@ -60,7 +68,8 @@ class WeatherProvider with ChangeNotifier {
 
   void getFiveDaysData() {
     setStatus(NetworkStatus.loading);
-    WeatherRepository(city: '$city').getFiveDaysForecastData(onSuccess: (data) {
+    WeatherRepository(city: '$_city').getFiveDaysForecastData(
+        onSuccess: (data) {
       fiveDaysData = data;
       setStatus(NetworkStatus.success);
     }, onError: (error) {
@@ -84,10 +93,9 @@ class WeatherProvider with ChangeNotifier {
   }
 
   getCurrentLocation(context) async {
-    bool serviceEnabled;
     LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    await Geolocator.isLocationServiceEnabled();
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -101,8 +109,8 @@ class WeatherProvider with ChangeNotifier {
     }
     return await Geolocator.getCurrentPosition().then((Position value) {
       currentPosition = value;
-      lat = currentPosition!.latitude;
-      lon = currentPosition!.longitude;
+      _lat = currentPosition!.latitude;
+      _lon = currentPosition!.longitude;
       notifyListeners();
     });
   }
