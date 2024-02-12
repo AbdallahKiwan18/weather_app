@@ -15,10 +15,11 @@ class WeatherApp extends StatelessWidget {
           title: 'Weather App',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            fontFamily: "Ubuntu",
             colorScheme:
                 ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
             useMaterial3: true,
-            scaffoldBackgroundColor:Colors.grey[200],
+            scaffoldBackgroundColor: AppColors.backgroundColor,
           ),
           home: const WeatherMainScreen(),
         );

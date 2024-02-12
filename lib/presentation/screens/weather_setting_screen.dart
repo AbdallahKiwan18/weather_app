@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/utils/colors.dart';
 import 'package:weather_app/core/utils/values_manger.dart';
 import 'package:weather_app/presentation/widgets/text_with_underline_widget.dart';
 
@@ -20,6 +21,8 @@ class WeatherSettingScreen extends StatelessWidget {
           SizedBox(height: AppSize.s30),
           Center(
             child: SwitchListTile(
+              activeColor: AppColors.primaryColor,
+              inactiveTrackColor: Colors.white,
               contentPadding: EdgeInsets.zero,
               title: Text(
                 "Use Fahrenheit",

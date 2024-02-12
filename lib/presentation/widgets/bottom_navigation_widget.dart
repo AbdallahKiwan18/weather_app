@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/utils/colors.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final int? index;
@@ -19,7 +20,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         currentIndex: index!,
-        //New
+        selectedItemColor: AppColors.primaryColor,
         onTap: onTap,
         backgroundColor: Colors.transparent,
         elevation: 0.0,

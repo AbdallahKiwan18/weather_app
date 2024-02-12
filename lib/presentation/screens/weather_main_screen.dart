@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/utils/colors.dart';
+import 'package:weather_app/core/utils/values_manger.dart';
 import 'package:weather_app/presentation/screens/next_five_days_screen.dart';
 import 'package:weather_app/presentation/screens/weather_home_screen.dart';
 import 'package:weather_app/presentation/screens/weather_setting_screen.dart';
@@ -28,6 +30,7 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: _pages![selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBarWidget(
         index: selectedPageIndex,

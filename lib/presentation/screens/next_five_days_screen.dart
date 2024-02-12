@@ -25,7 +25,7 @@ class NextFiveDaysScreen extends StatelessWidget {
                     return const DayWeatherWidget();
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: AppSize.s5);
+                    return SizedBox(height: AppSize.s15);
                   },
                   itemCount: 5))
         ],

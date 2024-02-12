@@ -212,6 +212,7 @@ class AppFontSize {
   static final double s22 = 22.sp;
   static final double s25 = 25.sp;
   static final double s30 = 30.sp;
+  static final double s35 = 35.sp;
   static final double s40 = 40.sp;
   static final double s70 = 70.sp;
 }

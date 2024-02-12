@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.9.0
   lottie:
+  dio:
 
 dev_dependencies:
   flutter_test:
@@ -27,25 +28,17 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
     - assets/animations/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
 
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/Ubuntu-Bold.ttf
+        - asset: assets/fonts/Ubuntu-Regular.ttf
+        - asset: assets/fonts/Ubuntu-Medium.ttf
+        - asset: assets/fonts/Ubuntu-Light.ttf
+
+
 

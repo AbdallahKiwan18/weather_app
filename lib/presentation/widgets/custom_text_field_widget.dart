@@ -105,25 +105,25 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
           enabledBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(width: AppSize.s2, color: AppColors.secondaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s30)),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s25)),
           ),
           disabledBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(width: AppSize.s2, color: AppColors.secondaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s30)),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s25)),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(width: AppSize.s2, color: Colors.red),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s30)),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s25)),
           ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(width: AppSize.s2, color: Colors.red),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s30)),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s25)),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(width: AppSize.s2, color: AppColors.primaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s30)),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s25)),
           ),
         ),
       ),
