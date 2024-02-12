@@ -27,12 +27,7 @@ class WeatherProvider with ChangeNotifier {
   NetworkStatus? getStatus() => _networkStatus;
 
   updateWeather() {
-    initState();
-  }
-
-  void initState() {
     getCurrentWeatherData();
-    // getFiveDaysData();
   }
 
   void getSearchWeatherData(searchCity) {
@@ -44,7 +39,7 @@ class WeatherProvider with ChangeNotifier {
         _city = searchCity;
         setStatus(NetworkStatus.success);
       }, onError: (error) {
-        if (searchCity == "") {
+        if (searchCity == "" || searchCity == null ) {
           _city = "";
           getCurrentWeatherData();
         }
@@ -66,15 +61,21 @@ class WeatherProvider with ChangeNotifier {
     });
   }
 
-  void getFiveDaysData() {
+  getFiveDaysData() {
     setStatus(NetworkStatus.loading);
-    WeatherRepository(city: '$_city').getFiveDaysForecastData(
+    WeatherRepository(
+      city: '$_city',
+      lat: _lat,
+      lon: _lon,
+    ).getFiveDaysForecastData(
+        isSearch: (_city != null) ? true : false,
         onSuccess: (data) {
-      fiveDaysData = data;
-      setStatus(NetworkStatus.success);
-    }, onError: (error) {
-      setStatus(NetworkStatus.error);
-    });
+          fiveDaysData = data;
+          setStatus(NetworkStatus.success);
+        },
+        onError: (error) {
+          setStatus(NetworkStatus.error);
+        });
   }
 
   getWeatherIcon(weatherType) {
