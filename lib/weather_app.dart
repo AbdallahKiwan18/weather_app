@@ -18,6 +18,7 @@ class WeatherApp extends StatelessWidget {
             colorScheme:
                 ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
             useMaterial3: true,
+            scaffoldBackgroundColor:Colors.grey[200],
           ),
           home: const WeatherMainScreen(),
         );

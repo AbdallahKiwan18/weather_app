@@ -12,21 +12,26 @@ class WeatherHomeScreen extends StatefulWidget {
 
 class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: AppPadding.p15, horizontal: AppPadding.p15),
-      child: Column(
-        children: [
-          SizedBox(height: AppSize.s50),
-          CustomTextFieldWidget(
-              ctrl: _searchController,
-              suffixIcon: Icons.search,
-              text: "Search"),
-          const WeatherCardWidget()
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: AppPadding.p15, horizontal: AppPadding.p24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: AppSize.s50),
+            CustomTextFieldWidget(
+                focus: _focusNode,
+                ctrl: _searchController,
+                suffixIcon: Icons.search,
+                text: "Search"),
+            const WeatherCardWidget(),
+          ],
+        ),
       ),
     );
   }

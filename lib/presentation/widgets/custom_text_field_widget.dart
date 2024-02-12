@@ -37,7 +37,7 @@ class CustomTextFieldWidget extends StatefulWidget {
 }
 
 class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
-  Color iconColor = AppColors.primaryColor;
+  Color iconColor = AppColors.secondaryColor;
 
   void setFoucsNodeListener() {
     widget.focus!.addListener(() {
@@ -95,7 +95,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
                       child: Icon(
                         widget.suffixIcon,
                         size: AppSize.s25,
-                        color: AppColors.primaryColor,
+                        color: iconColor,
                       ),
                     ),
                   ),

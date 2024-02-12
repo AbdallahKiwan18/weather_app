@@ -35,7 +35,8 @@ class WeatherDateLocationWidget extends StatelessWidget {
           const Spacer(),
           Icon(
             Icons.location_on_outlined,
-            size: AppSize.s20,
+            size: AppSize.s25,
+            color: AppColors.primaryColor,
           )
         ],
       ),

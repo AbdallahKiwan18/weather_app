@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/presentation/screens/next_five_days_screen.dart';
 import 'package:weather_app/presentation/screens/weather_home_screen.dart';
+import 'package:weather_app/presentation/screens/weather_setting_screen.dart';
 import 'package:weather_app/presentation/widgets/bottom_navigation_widget.dart';
 
 class WeatherMainScreen extends StatefulWidget {
@@ -17,8 +19,8 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   void initState() {
     _pages = [
       {'page': const WeatherHomeScreen()},
-      {'page': Container()},
-      {'page': Container()},
+      {'page': const NextFiveDaysScreen()},
+      {'page': const WeatherSettingScreen()},
     ];
     super.initState();
   }
@@ -26,11 +28,12 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _pages![selectedPageIndex]['page'] as Widget,
-        bottomNavigationBar: BottomNavigationBarWidget(
-          index: selectedPageIndex,
-          onTap: _onItemTapped,
-        ));
+      body: _pages![selectedPageIndex]['page'] as Widget,
+      bottomNavigationBar: BottomNavigationBarWidget(
+        index: selectedPageIndex,
+        onTap: _onItemTapped,
+      ),
+    );
   }
 
   void _onItemTapped(int index) {

@@ -121,6 +121,7 @@ class AppSize {
   static final double s280 = 280.0.r;
   static final double s290 = 290.0.r;
   static final double s300 = 300.0.r;
+  static final double s400 = 400.0.r;
   static final double s450 = 450.0.r;
   static final double s480 = 480.0.r;
   static final double s500 = 500.0.r;
@@ -212,4 +213,5 @@ class AppFontSize {
   static final double s25 = 25.sp;
   static final double s30 = 30.sp;
   static final double s40 = 40.sp;
+  static final double s70 = 70.sp;
 }
