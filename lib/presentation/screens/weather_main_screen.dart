@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/core/utils/colors.dart';
-import 'package:weather_app/core/utils/values_manger.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app/presentation/providers/weather_provider.dart';
 import 'package:weather_app/presentation/screens/next_five_days_screen.dart';
 import 'package:weather_app/presentation/screens/weather_home_screen.dart';
 import 'package:weather_app/presentation/screens/weather_setting_screen.dart';
@@ -16,9 +16,16 @@ class WeatherMainScreen extends StatefulWidget {
 class _WeatherMainScreenState extends State<WeatherMainScreen> {
   List<Map<String, Object>>? _pages;
   int selectedPageIndex = 0;
+  WeatherProvider? weatherProvider;
+
+
 
   @override
   void initState() {
+    weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await weatherProvider?.updateWeather();
+    });
     _pages = [
       {'page': const WeatherHomeScreen()},
       {'page': const NextFiveDaysScreen()},
@@ -30,7 +37,6 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: _pages![selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBarWidget(
         index: selectedPageIndex,
