@@ -4,4 +4,5 @@ class Images {
   static const String sunny = 'assets/animations/sun.json';
   static const String snow = 'assets/animations/snow.json';
   static const String loading = 'assets/animations/loading.json';
+  static const String cloud = 'assets/animations/clouds.json';
 }

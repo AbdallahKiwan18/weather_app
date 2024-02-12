@@ -58,7 +58,8 @@ class WeatherRepository {
     Function(List<FiveDayData> fiveDayData)? onSuccess,
     Function(dynamic error)? onError,
   }) {
-    final url = '${Endpoints.baseUrl}/forecast?q=$city&lang=en&$apiKey';
+    final url =
+        '${Endpoints.baseUrl}/forecast?lat=$lat&lon=$lon&q=$city&lang=en&$apiKey';
     DioHelper(
       url: url,
     ).get(

@@ -37,24 +37,28 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
     return Consumer<WeatherProvider>(builder: (context, controller, _) {
       return (controller.getStatus() == NetworkStatus.loading)
           ? const Center(child: LoadingWidget())
-          : SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: AppPadding.p15, horizontal: AppPadding.p24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: AppSize.s50),
-                    CustomTextFieldWidget(
-                        focus: _focusNode,
-                        ctrl: _searchController,
-                        suffixIcon: Icons.search,
-                        text: "Search"),
-                    const WeatherCardWidget(),
-                  ],
-                ),
-              ),
-            );
+          : (controller.getStatus() == NetworkStatus.error)
+              ? const Center(
+                  child: Text("An Error Happened"),
+                )
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: AppPadding.p15, horizontal: AppPadding.p24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: AppSize.s50),
+                        CustomTextFieldWidget(
+                            focus: _focusNode,
+                            ctrl: _searchController,
+                            suffixIcon: Icons.search,
+                            text: "Search"),
+                        const WeatherCardWidget(),
+                      ],
+                    ),
+                  ),
+                );
     });
   }
 }
