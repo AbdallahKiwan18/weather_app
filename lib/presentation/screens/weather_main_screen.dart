@@ -18,13 +18,14 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   int selectedPageIndex = 0;
   WeatherProvider? weatherProvider;
 
-
-
   @override
   void initState() {
     weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await weatherProvider?.updateWeather();
+      await weatherProvider?.getCurrentLocation(context);
+      if (weatherProvider!.currentPosition != null) {
+        await weatherProvider?.updateWeather();
+      }
     });
     _pages = [
       {'page': const WeatherHomeScreen()},

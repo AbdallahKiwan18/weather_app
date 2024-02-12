@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:weather_app/core/helpers/functions.dart';
 import 'package:weather_app/core/utils/app_images.dart';
 import 'package:weather_app/core/utils/network_status.dart';
 import 'package:weather_app/models/current_weather_data.dart';
@@ -6,14 +8,15 @@ import 'package:weather_app/models/five_days_data.dart';
 import 'package:weather_app/repositories/weather_repository.dart';
 
 class WeatherProvider with ChangeNotifier {
-  String? city = "cairo";
-  dynamic lat = 30.033333;
-  dynamic lon = 31.233334;
+  String? city;
+  dynamic lat;
+  dynamic lon;
   String? searchText;
   CurrentWeatherData currentWeatherData = CurrentWeatherData();
   List<CurrentWeatherData> dataList = [];
   List<FiveDayData> fiveDaysData = [];
-  NetworkStatus? _networkStatus = NetworkStatus.start;
+  NetworkStatus? _networkStatus = NetworkStatus.loading;
+  Position? currentPosition;
 
   setStatus(NetworkStatus networkStatus) {
     _networkStatus = networkStatus;
@@ -28,13 +31,14 @@ class WeatherProvider with ChangeNotifier {
 
   void initState() {
     getCurrentWeatherData();
-    getFiveDaysData();
+    // getFiveDaysData();
   }
 
-  void getSearchWeatherData() {
+  void getSearchWeatherData(searchCity) {
     setStatus(NetworkStatus.loading);
-    WeatherRepository(city: '$city').getSearchWeatherData(onSuccess: (data) {
+    WeatherRepository(city: searchCity).getSearchWeatherData(onSuccess: (data) {
       currentWeatherData = data;
+      city = searchCity;
       setStatus(NetworkStatus.success);
     }, onError: (error) {
       setStatus(NetworkStatus.error);
@@ -77,5 +81,29 @@ class WeatherProvider with ChangeNotifier {
       default:
         return Images.sunny; // Default icon if weather type is unknown
     }
+  }
+
+  getCurrentLocation(context) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return showCustomDialog(context);
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return showCustomDialog(context);
+    }
+    return await Geolocator.getCurrentPosition().then((Position value) {
+      currentPosition = value;
+      lat = currentPosition!.latitude;
+      lon = currentPosition!.longitude;
+      notifyListeners();
+    });
   }
 }
