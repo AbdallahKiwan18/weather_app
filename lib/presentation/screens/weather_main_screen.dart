@@ -16,25 +16,26 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   @override
   void initState() {
     _pages = [
-      {'page': WeatherHomeScreen()},
-      {'page': WeatherHomeScreen()},
-      {'page': WeatherHomeScreen()},
+      {'page': const WeatherHomeScreen()},
+      {'page': Container()},
+      {'page': Container()},
     ];
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              WeatherHomeScreen(),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBarWidget());
+    return Scaffold(
+        body: _pages![selectedPageIndex]['page'] as Widget,
+        bottomNavigationBar: BottomNavigationBarWidget(
+          index: selectedPageIndex,
+          onTap: _onItemTapped,
+        ));
   }
 
-
+  void _onItemTapped(int index) {
+    setState(() {
+      selectedPageIndex = index;
+    });
+  }
 }
