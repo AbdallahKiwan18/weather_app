@@ -13,15 +13,13 @@ class WeatherProvider with ChangeNotifier {
   dynamic _lat;
   dynamic _lon;
   CurrentWeatherData currentWeatherData = CurrentWeatherData();
-   final TextEditingController searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   late final FocusNode focusNode = FocusNode();
   final DeBouncer _deBouncer = DeBouncer();
-  List<CurrentWeatherData> dataList = [];
   List<FiveDayData> fiveDaysData = [];
   NetworkStatus? _networkStatus = NetworkStatus.loading;
   Position? currentPosition;
   bool isFahrenheit = false;
-
 
   setStatus(NetworkStatus networkStatus) {
     _networkStatus = networkStatus;
@@ -37,41 +35,43 @@ class WeatherProvider with ChangeNotifier {
   void getSearchWeatherData(searchCity) {
     setStatus(NetworkStatus.loading);
     _deBouncer.run(() {
-      WeatherRepository(city: searchCity).getSearchWeatherData(
+      WeatherRepository().getSearchWeatherData(
+          city: searchCity,
           onSuccess: (data) {
-        currentWeatherData = data;
-        _city = searchCity;
-        setStatus(NetworkStatus.success);
-      }, onError: (error) {
-        if (searchCity == "" || searchCity == null ) {
-          _city = null;
-          getCurrentWeatherData();
-        }
-        setStatus(NetworkStatus.error);
-      });
+            currentWeatherData = data;
+            _city = searchCity;
+            setStatus(NetworkStatus.success);
+          },
+          onError: (error) {
+            if (searchCity == "" || searchCity == null) {
+              _city = null;
+              getCurrentWeatherData();
+            }
+            setStatus(NetworkStatus.error);
+          });
     });
   }
 
   void getCurrentWeatherData() {
     setStatus(NetworkStatus.loading);
-    WeatherRepository(
-      lat: _lat,
-      lon: _lon,
-    ).getCurrentWeatherData(onSuccess: (data) {
-      currentWeatherData = data;
-      setStatus(NetworkStatus.success);
-    }, onError: (error) {
-      setStatus(NetworkStatus.error);
-    });
+    WeatherRepository().getCurrentWeatherData(
+        lat: _lat,
+        lon: _lon,
+        onSuccess: (data) {
+          currentWeatherData = data;
+          setStatus(NetworkStatus.success);
+        },
+        onError: (error) {
+          setStatus(NetworkStatus.error);
+        });
   }
 
   getFiveDaysData() {
     setStatus(NetworkStatus.loading);
-    WeatherRepository(
-      city: _city,
-      lat: _lat,
-      lon: _lon,
-    ).getFiveDaysForecastData(
+    WeatherRepository().getFiveDaysForecastData(
+        city: _city,
+        lat: _lat,
+        lon: _lon,
         isSearch: (_city == null) ? false : true,
         onSuccess: (data) {
           fiveDaysData = data;
@@ -120,8 +120,8 @@ class WeatherProvider with ChangeNotifier {
     });
   }
 
-  changeToFahrenheit(bool val){
-    isFahrenheit  = val;
+  changeToFahrenheit(bool val) {
+    isFahrenheit = val;
     notifyListeners();
   }
 

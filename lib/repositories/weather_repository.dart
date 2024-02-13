@@ -5,17 +5,10 @@ import 'package:weather_app/models/current_weather_data.dart';
 import 'package:weather_app/models/five_days_data.dart';
 
 class WeatherRepository {
-  final String? city;
-  final dynamic lat;
-  final dynamic lon;
+  WeatherRepository();
 
-  WeatherRepository({
-    this.lat,
-    this.lon,
-    this.city,
-  });
-
-  void getSearchWeatherData({
+  getSearchWeatherData({
+    city,
     Function(CurrentWeatherData currentWeatherData)? onSuccess,
     Function(dynamic error)? onError,
   }) {
@@ -35,6 +28,8 @@ class WeatherRepository {
   }
 
   void getCurrentWeatherData({
+    lat,
+    lon,
     Function(CurrentWeatherData currentWeatherData)? onSuccess,
     Function(dynamic error)? onError,
   }) {
@@ -54,7 +49,10 @@ class WeatherRepository {
             });
   }
 
-  void getFiveDaysForecastData({
+  getFiveDaysForecastData({
+    city,
+    lat,
+    lon,
     Function(List<FiveDayData> fiveDayData)? onSuccess,
     Function(dynamic error)? onError,
     bool isSearch = false,
